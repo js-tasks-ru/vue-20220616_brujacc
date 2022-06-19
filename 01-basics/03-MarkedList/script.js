@@ -1,4 +1,4 @@
-// import { createApp } from './vendor/vue.esm-browser.js';
+import { createApp } from './vendor/vue.esm-browser.js';
 
 // From https://jsonplaceholder.typicode.com/comments
 const emails = [
@@ -29,4 +29,21 @@ const emails = [
   'Isaias_Kuhic@jarrett.net',
 ];
 
-// Требуется создать Vue приложение
+createApp({
+  data() {
+    return {
+      searchQuery: '',
+      emailList: [...emails],
+    };
+  },
+  computed: {
+    filteredEmailList() {
+      return this.emailList.map((email) => {
+        if (this.searchQuery !== '' && email.includes(this.searchQuery)) {
+          return { email: email, marked: true };
+        }
+        return { email: email, marked: false };
+      });
+    },
+  },
+}).mount('#app');
