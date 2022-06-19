@@ -5,11 +5,11 @@ createApp({
     return {
       arg1: 0,
       arg2: 0,
-      operator: '',
+      operator: 'sum',
     };
   },
   computed: {
-    getResult() {
+    result() {
       switch (this.operator) {
         case 'sum':
           return this.arg1 + this.arg2;
