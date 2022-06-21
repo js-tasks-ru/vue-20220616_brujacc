@@ -6,14 +6,14 @@ export default defineComponent({
     title: String,
     image: String,
   },
-  methods: {
-    getBackgroundImg() {
+  computed: {
+    backgroundImg() {
       return this.image ? `--bg-url: url(${this.image})` : '';
     },
   },
 
   template: `
-    <div class="meetup-cover" :style="getBackgroundImg()">
+    <div class="meetup-cover" :style="backgroundImg">
         <h1 class="meetup-cover__title">{{ title }}</h1>
     </div>`,
 });
