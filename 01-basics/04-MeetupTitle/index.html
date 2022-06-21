@@ -7,7 +7,7 @@
   <body>
     <div id="app">
       <div>
-        <label v-for="n in 5"><input type="radio" name="meetupId" :value=n v-model="meetId"/> {{ n }}</label>
+        <label v-for="n in 5"><input type="radio" name="meetupId" :value="n" v-model="meetId" /> {{ n }}</label>
         <hr />
         <h3>{{meetTitle}}</h3>
       </div>
