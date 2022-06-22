@@ -1,21 +1,46 @@
 <template>
-  <div class="dropdown dropdown_opened">
-    <button type="button" class="dropdown__toggle dropdown__toggle_icon">
-      <ui-icon icon="tv" class="dropdown__icon" />
-      <span>Title</span>
+  <div class="dropdown" :class="dropdownStatus">
+    <button
+      type="button"
+      class="dropdown__toggle"
+      :class="`${containsIcon ? 'dropdown__toggle_icon' : ''}`"
+      @click="toggleMenu()"
+    >
+      <ui-icon v-if="containsIcon && selectedItem?.icon" :icon="selectedItem?.icon" class="dropdown__icon" />
+      <span>{{ selectedItem?.text || title }}</span>
     </button>
 
-    <div class="dropdown__menu" role="listbox">
-      <button class="dropdown__item dropdown__item_icon" role="option" type="button">
-        <ui-icon icon="tv" class="dropdown__icon" />
-        Option 1
-      </button>
-      <button class="dropdown__item dropdown__item_icon" role="option" type="button">
-        <ui-icon icon="tv" class="dropdown__icon" />
-        Option 2
+    <div v-show="isOpen" class="dropdown__menu" role="listbox">
+      <button
+        v-for="option in options"
+        :key="option.text"
+        class="dropdown__item"
+        :class="`${containsIcon ? 'dropdown__item_icon' : ''}`"
+        role="option"
+        type="button"
+        @click="
+          () => {
+            selectItem(option.value);
+            toggleMenu();
+          }
+        "
+      >
+        <ui-icon v-if="containsIcon && option.icon" :icon="option.icon" class="dropdown__icon" />
+        {{ option.text }}
       </button>
     </div>
   </div>
+  <select style="visibility: hidden" @change="(event) => selectItem(event.target.value)">
+    <!-- <option disabled value>{{ selectedItem?.text || title }}</option> -->
+    <option
+      v-for="option in options"
+      :key="option.text"
+      :value="option.value"
+      :selected="selectedItem?.value === option.value"
+    >
+      {{ option.text }}
+    </option>
+  </select>
 </template>
 
 <script>
@@ -25,6 +50,42 @@ export default {
   name: 'UiDropdown',
 
   components: { UiIcon },
+  props: {
+    options: {
+      type: Array,
+      required: true,
+    },
+    modelValue: String,
+    title: {
+      type: String,
+      required: true,
+    },
+  },
+  emits: ['update:modelValue'],
+  data() {
+    return {
+      isOpen: false,
+    };
+  },
+  computed: {
+    dropdownStatus() {
+      return this.isOpen ? 'dropdown_opened' : '';
+    },
+    containsIcon() {
+      return this.options.some((item) => !!item.icon);
+    },
+    selectedItem() {
+      return this.modelValue ? this.options.filter((elem) => elem.value === this.modelValue)[0] : '';
+    },
+  },
+  methods: {
+    toggleMenu() {
+      this.isOpen = !this.isOpen;
+    },
+    selectItem(title) {
+      this.$emit('update:modelValue', title);
+    },
+  },
 };
 </script>
 
