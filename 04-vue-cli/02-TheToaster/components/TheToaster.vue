@@ -20,14 +20,14 @@ export default {
   },
 
   methods: {
-    getToastOptions() {
-      return { lifetime: this.lifeTime, id: Date.now().toString() };
+    getToastOptions(status) {
+      return { status: status, lifetime: this.lifeTime, id: Date.now().toString() };
     },
     success(message) {
-      this.toasts.push({ status: 'success', msg: message, ...this.getToastOptions() });
+      this.toasts.push({ msg: message, ...this.getToastOptions('success') });
     },
     error(message) {
-      this.toasts.push({ status: 'error', msg: message, ...this.getToastOptions() });
+      this.toasts.push({ msg: message, ...this.getToastOptions('error') });
     },
     removeToast(toastId) {
       this.toasts = this.toasts.filter((elem) => elem.id !== toastId);
