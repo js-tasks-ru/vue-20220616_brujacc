@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     removeToastWithDelay(delay) {
-      setTimeout(() => this.$emit('removal', this.toast.id), delay);
+      setTimeout(() => this.$emit('removal'), delay);
     },
   },
 };

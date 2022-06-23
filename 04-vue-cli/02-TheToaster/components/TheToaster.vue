@@ -1,11 +1,13 @@
 <template>
   <div class="toasts">
-    <ui-toast v-for="toast in toasts" :key="toast.id" :toast="toast" @removal="(id) => removeToast(id)"></ui-toast>
+    <ui-toast v-for="toast in toasts" :key="toast.id" :toast="toast" @removal="removeToast(toast.id)"></ui-toast>
   </div>
 </template>
 
 <script>
 import UiToast from './UiToast.vue';
+
+let uniqueId = 0;
 
 export default {
   name: 'TheToaster',
@@ -21,7 +23,7 @@ export default {
 
   methods: {
     getToastOptions(status) {
-      return { status: status, lifetime: this.lifeTime, id: Date.now().toString() };
+      return { status: status, lifetime: this.lifeTime, id: uniqueId++ };
     },
     success(message) {
       this.toasts.push({ msg: message, ...this.getToastOptions('success') });

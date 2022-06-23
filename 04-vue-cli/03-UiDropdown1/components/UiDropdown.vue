@@ -3,7 +3,7 @@
     <button
       type="button"
       class="dropdown__toggle"
-      :class="`${containsIcon ? 'dropdown__toggle_icon' : ''}`"
+      :class="{ dropdown__toggle_icon: containsIcon }"
       @click="toggleMenu()"
     >
       <ui-icon v-if="containsIcon && selectedItem?.icon" :icon="selectedItem?.icon" class="dropdown__icon" />
@@ -18,19 +18,14 @@
         :class="`${containsIcon ? 'dropdown__item_icon' : ''}`"
         role="option"
         type="button"
-        @click="
-          () => {
-            selectItem(option.value);
-            toggleMenu();
-          }
-        "
+        @click="() => selectItem(option.value)"
       >
         <ui-icon v-if="containsIcon && option.icon" :icon="option.icon" class="dropdown__icon" />
         {{ option.text }}
       </button>
     </div>
   </div>
-  <select style="visibility: hidden" @change="(event) => selectItem(event.target.value)">
+  <select style="display: none" @change="(event) => $emit('update:modelValue', event.target.value)">
     <!-- <option disabled value>{{ selectedItem?.text || title }}</option> -->
     <option
       v-for="option in options"
@@ -84,6 +79,7 @@ export default {
     },
     selectItem(title) {
       this.$emit('update:modelValue', title);
+      this.toggleMenu();
     },
   },
 };
