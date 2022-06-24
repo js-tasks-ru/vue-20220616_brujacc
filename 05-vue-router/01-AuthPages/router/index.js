@@ -1,7 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import PageIndex from '../views/PageIndex';
-import PageLogin from '../views/PageLogin';
-import PageRegister from '../views/PageRegister';
 
 const routes = [
   {
@@ -12,12 +10,12 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: PageLogin,
+    component: () => import('../views/PageLogin'),
   },
   {
     path: '/register',
     name: 'register',
-    component: PageRegister,
+    component: () => import('../views/PageRegister'),
   },
 ];
 
