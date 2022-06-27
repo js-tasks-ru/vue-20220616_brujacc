@@ -32,17 +32,18 @@ export default {
     };
   },
   computed: {
-    newDate() {
-      return new Date(this.modelValue);
+    newDateUTC() {
+      const date = new Date(this.modelValue);
+      return addMinutes(date, date.getTimezoneOffset());
     },
     inputVal() {
       switch (this.type) {
         case 'time':
-          return this.modelValue ? this.formatTime(this.newDate) : '';
+          return this.modelValue ? this.formatTime(this.newDateUTC) : '';
         case 'datetime-local':
-          return this.modelValue ? this.formatDateTime(this.newDate) : '';
+          return this.modelValue ? this.formatDateTime(this.newDateUTC) : '';
         default:
-          return this.modelValue ? this.formatDate(this.newDate) : '';
+          return this.modelValue ? this.formatDate(this.newDateUTC) : '';
       }
     },
   },
@@ -51,14 +52,14 @@ export default {
       this.$emit('update:modelValue', event.target.valueAsNumber);
     },
     formatDate(date) {
-      return format(addMinutes(date, date.getTimezoneOffset()), 'yyyy-MM-dd');
+      return format(date, 'yyyy-MM-dd');
     },
     formatTime(date) {
       const variant = this.$attrs.step && this.$attrs.step % 60 !== 0 ? 'HH:mm:ss' : 'HH:mm';
-      return format(addMinutes(date, date.getTimezoneOffset()), variant);
+      return format(date, variant);
     },
     formatDateTime(date) {
-      return format(addMinutes(date, date.getTimezoneOffset()), "yyyy-MM-dd'T'HH:mm");
+      return format(date, "yyyy-MM-dd'T'HH:mm");
     },
   },
 };
