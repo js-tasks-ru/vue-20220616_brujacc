@@ -1,11 +1,11 @@
 <template>
   <div
     class="input-group"
-    :class="[
-      { 'input-group_icon': !!$slots['left-icon'] || !!$slots['right-icon'] },
-      { 'input-group_icon-left': !!$slots['left-icon'] },
-      { 'input-group_icon-right': !!$slots['right-icon'] },
-    ]"
+    :class="{
+      'input-group_icon': $slots['left-icon'] || $slots['right-icon'],
+      'input-group_icon-left': $slots['left-icon'],
+      'input-group_icon-right': $slots['right-icon'],
+    }"
   >
     <div v-if="$slots['left-icon']" class="input-group__icon">
       <slot name="left-icon" />
@@ -16,7 +16,7 @@
       ref="input"
       :value="$attrs.modelValue"
       class="form-control"
-      :class="[{ 'form-control_sm': small }, { 'form-control_rounded': rounded }]"
+      :class="{ 'form-control_sm': small, 'form-control_rounded': rounded }"
       @[eventName]="$emit('update:modelValue', $event.target.value)"
     />
     <div v-if="$slots['right-icon']" class="input-group__icon">
