@@ -45,7 +45,7 @@ export default {
       }
     },
     hasImage() {
-      return !!this.selectedImage || false;
+      return !!this.selectedImage;
     },
   },
   watch: {
