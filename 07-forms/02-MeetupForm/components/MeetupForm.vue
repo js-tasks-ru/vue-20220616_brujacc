@@ -31,12 +31,11 @@
       <h3 class="meetup-form__agenda-title">Программа</h3>
 
       <meetup-agenda-item-form
-        v-for="agendaItem in localObject.agenda"
+        v-for="(agendaItem, index) in localObject.agenda"
         :key="agendaItem.id"
-        :agenda-item="agendaItem"
+        v-model:agenda-item="localObject.agenda[index]"
         class="meetup-form__agenda-item"
         @remove="agendaItemRemove(agendaItem.id)"
-        @update:agendaItem="updateTime($event)"
       />
 
       <div class="meetup-form__append">
@@ -114,14 +113,6 @@ export default {
     },
     agendaItemRemove(id) {
       this.localObject.agenda = this.localObject.agenda.filter((item) => item.id !== id);
-    },
-    updateTime(event) {
-      this.localObject.agenda = this.localObject.agenda.map((item) => {
-        if (item.id === event.id) {
-          return event;
-        }
-        return item;
-      });
     },
   },
 };
