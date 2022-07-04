@@ -132,11 +132,15 @@ export default {
         this.$emit('update:agendaItem', { ...newValue });
       },
     },
+    end: {
+      handler(newValue) {
+        this.duration = newValue - this.start;
+      },
+    },
   },
   mounted() {
     this.start = this.$refs.inputStarts.$refs.input.valueAsNumber;
     this.end = this.$refs.inputEnds.$refs.input.valueAsNumber;
-    this.duration = this.end - this.start;
   },
   methods: {
     updateStartTime(event) {
@@ -148,7 +152,6 @@ export default {
     updateEndTime(event) {
       this.localAgendaItem.endsAt = event.target.value;
       this.end = event.target.valueAsNumber;
-      this.duration = this.end - this.start;
     },
   },
 };
