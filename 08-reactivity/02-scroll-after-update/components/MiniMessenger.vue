@@ -1,6 +1,6 @@
 <template>
   <main class="mini-messenger">
-    <ul class="messages">
+    <ul ref="overflow" class="messages">
       <li v-for="message in messages" :key="message.id" ref="items" class="message">
         {{ message.text }}
       </li>
@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import { nextTick } from 'vue';
 let lastId = 0;
 
 export default {
@@ -35,13 +36,14 @@ export default {
     handleSendSubmit() {
       this.send();
     },
-
-    send() {
+    async send() {
       this.messages.push({
         id: lastId++,
         text: this.newMessage,
       });
       this.newMessage = '';
+      await nextTick();
+      this.$refs.overflow.scrollTop = this.$refs.overflow.scrollHeight;
     },
   },
 };
