@@ -42,7 +42,10 @@ export default {
     },
 
     setData(sensors) {
-      this.sensors = sensors;
+      this.sensors = { ...sensors };
+      for (const key in this.sensors) {
+        this.sensors[key] = { ...sensors[key] };
+      }
     },
   },
 };
