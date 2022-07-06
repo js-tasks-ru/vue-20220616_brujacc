@@ -34,11 +34,13 @@
         </ui-form-group>
       </div>
     </div>
-    <template v-for="(value, key) in $options.agendaItemFormSchemas[localAgendaItem.type]" :key="key">
-      <ui-form-group :label="value.label">
-        <component :is="value.component" v-model="localAgendaItem[key]" v-bind="value.props" />
-      </ui-form-group>
-    </template>
+    <ui-form-group
+      v-for="(value, key) in $options.agendaItemFormSchemas[localAgendaItem.type]"
+      :key="key"
+      :label="value.label"
+    >
+      <component :is="value.component" v-model="localAgendaItem[key]" v-bind="value.props" />
+    </ui-form-group>
   </fieldset>
 </template>
 
