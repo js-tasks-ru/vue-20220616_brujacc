@@ -1,9 +1,8 @@
-<script>
-// import { compile } from 'vue';
+<script lang="jsx">
+import { compile } from 'vue';
 
 export default {
   name: 'TemplateRenderer',
-
   props: {
     template: {
       type: String,
@@ -19,6 +18,20 @@ export default {
       type: [Object, Array],
       default: () => [],
     },
+  },
+
+  watch: {
+    components: {
+      handler(newVal) {
+        this.$options.components = newVal;
+      },
+      immediate: true,
+    },
+  },
+
+  render(...args) {
+    const renderFunction = compile(this.template);
+    return renderFunction.apply(this, args);
   },
 };
 </script>
