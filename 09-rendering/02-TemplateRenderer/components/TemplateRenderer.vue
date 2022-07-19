@@ -3,7 +3,6 @@ import { compile, defineComponent, h } from 'vue';
 
 export default {
   name: 'TemplateRenderer',
-
   props: {
     template: {
       type: String,
